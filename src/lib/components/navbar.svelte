@@ -1,13 +1,12 @@
 <script>
-  import { page } from "$app/stores";
-  import { auth } from "$lib/localAuth";
+  import { auth, dashboard } from "$lib/stores";
   import { AlignLeft, CircleUser } from "lucide-svelte";
 </script>
 
 <header class="flex w-full justify-center">
   <div class="navbar bg-base-200 lg:mt-3 lg:max-w-6xl lg:rounded-xl">
     <div class="flex-1">
-      {#if $page.url.pathname.startsWith("/dashboard")}
+      {#if $dashboard}
         <label for="my-drawer" class="btn btn-ghost drawer-button text-primary lg:hidden">
           <AlignLeft strokeWidth={2.5} />
         </label>
