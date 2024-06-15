@@ -21,15 +21,14 @@ export const uploads = sqliteTable(
   "uploads",
   {
     id: text("id").primaryKey().notNull(),
+    label: text("label"),
     createdAt: integer("created_at", { mode: "timestamp" }).notNull(),
     createdIp: text("created_ip").notNull(),
     createdByUser: text("created_by_user").references(() => users.id, { onDelete: "set null" }),
     expireAt: integer("expire_at", { mode: "timestamp" }).notNull(),
-    deleted: integer("deleted", { mode: "boolean" }).default(false),
     bytes: integer("bytes").notNull(),
   },
   (table) => ({
-    ipIdx: index("uploads_ip_idx").on(table.createdIp),
     userIdx: index("uploads_user_idx").on(table.createdByUser),
   }),
 );
