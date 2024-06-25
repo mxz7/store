@@ -1,9 +1,14 @@
+import db from "$lib/server/database/db.js";
+import { uploads, users } from "$lib/server/database/schema.js";
+import { redirect } from "@sveltejs/kit";
+import { count, eq, sum } from "drizzle-orm";
+
 const PER_PAGE = 15;
 
 export async function load({ url, parent }) {
   const { auth } = await parent();
 
-  if (!auth.authenticated || auth.user.type !== "admin") return redirect(302, "/dashboard");
+  if (!auth.authenticated || !auth.user.admin) return redirect(302, "/dashboard");
 
   let page = parseInt(url.searchParams.get("page") || "1") || 1;
 
@@ -15,18 +20,16 @@ export async function load({ url, parent }) {
         id: users.id,
         username: users.username,
         createdAt: users.createdAt,
-        type: users.type,
-        banned: users.banned,
-        uploaded: count(images.id),
+        type: users.admin,
         ip: users.createdIp,
+        uploaded: count(uploads.id),
+        size: sum(uploads.bytes),
       })
       .from(users)
-      .leftJoin(images, eq(images.uploadedBy, users.id))
+      .leftJoin(uploads, eq(uploads.createdByUser, users.id))
       .groupBy(users.id)
       .limit(PER_PAGE)
-      .offset((page - 1) * PER_PAGE)
-      .orderBy(desc(users.createdAt)),
-
+      .offset((page - 1) * PER_PAGE),
     db.select({ amount: count() }).from(users),
   ]);
 
