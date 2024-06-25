@@ -9,6 +9,9 @@
 
   const { form, errors, enhance, constraints, message, delayed } = superForm(data.form, {
     delayMs: 100,
+    onResult(event) {
+      getLocalAuth();
+    },
   });
 
   message.subscribe((value) => {

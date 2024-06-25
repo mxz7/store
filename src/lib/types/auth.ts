@@ -1,10 +1,11 @@
-export type Unauthed = {
-  authenticated: false;
-};
+import type { Session, User } from "lucia";
 
 export type Authed = {
   authenticated: true;
-  id: string;
-  username: string;
-  admin: boolean;
+  user: User;
+  session: Session;
+};
+
+export type Unauthed = {
+  authenticated: false;
 };

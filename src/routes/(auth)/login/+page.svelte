@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { getLocalAuth } from "$lib/stores.js";
   import { KeyRound, User } from "lucide-svelte";
   import { superForm } from "sveltekit-superforms";
 
@@ -6,6 +7,9 @@
 
   const { form, errors, enhance, constraints, delayed } = superForm(data.form, {
     delayMs: 100,
+    onResult(event) {
+      getLocalAuth();
+    },
   });
 </script>
 

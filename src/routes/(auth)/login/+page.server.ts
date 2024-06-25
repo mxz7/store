@@ -8,10 +8,10 @@ import { eq } from "drizzle-orm";
 import { message, setError, superValidate } from "sveltekit-superforms";
 import { zod } from "sveltekit-superforms/adapters";
 
-export async function load({ locals }) {
+export async function load({ locals, request }) {
   const auth = await locals.validate();
 
-  if (auth) return redirect(302, "/dashboard");
+  if (auth.authenticated) return redirect(302, "/dashboard");
 
   const form = await superValidate(zod(loginSchema));
 

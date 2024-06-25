@@ -12,7 +12,7 @@ import { zod } from "sveltekit-superforms/adapters";
 export async function load({ locals }) {
   const auth = await locals.validate();
 
-  if (auth) return redirect(302, "/dashboard");
+  if (!auth.authenticated) return redirect(302, "/dashboard");
 
   const form = await superValidate(zod(signupSchema));
 

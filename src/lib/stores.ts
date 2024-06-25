@@ -7,5 +7,5 @@ export const dashboard = writable<boolean>(false);
 export async function getLocalAuth() {
   const res = await fetch("/api/auth").then((r) => r.json());
 
-  auth.set({ authenticated: res, ...res.user });
+  auth.set(res);
 }
