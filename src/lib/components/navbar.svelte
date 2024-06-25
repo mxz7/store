@@ -10,11 +10,17 @@
         <label for="my-drawer" class="btn btn-ghost drawer-button text-primary lg:hidden">
           <AlignLeft strokeWidth={2.5} />
         </label>
-        <a href="/" class="btn btn-ghost hidden text-xl font-semibold text-primary lg:inline-flex"
-          >files</a
-        >
+        <a href="/" class="btn btn-ghost hidden text-xl font-semibold lg:inline-flex">
+          <span class="bg-gradient-to-r from-primary to-info bg-clip-text text-transparent">
+            files
+          </span>
+        </a>
       {:else}
-        <a href="/" class="btn btn-ghost text-xl font-semibold text-primary">store</a>
+        <a href="/" class="btn btn-ghost text-xl font-semibold">
+          <span class="bg-gradient-to-r from-primary to-info bg-clip-text text-transparent">
+            files
+          </span>
+        </a>
       {/if}
     </div>
     <div class="flex-none">
