@@ -11,7 +11,7 @@
           <AlignLeft strokeWidth={2.5} />
         </label>
         <a href="/" class="btn btn-ghost hidden text-xl font-semibold text-primary lg:inline-flex"
-          >store</a
+          >files</a
         >
       {:else}
         <a href="/" class="btn btn-ghost text-xl font-semibold text-primary">store</a>
