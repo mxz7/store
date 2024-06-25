@@ -9,5 +9,5 @@ export async function getLocalAuth() {
 
   console.log(res);
 
-  auth.set(res);
+  auth.set({ authenticated: res, ...res.user });
 }

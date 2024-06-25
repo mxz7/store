@@ -11,7 +11,9 @@
     if (browser) {
       console.log("processing auth");
       $auth = null;
-      Promise.resolve(data.auth).then((authData) => ($auth = authData));
+      Promise.resolve(data.auth).then(
+        (authData) => ($auth = { authenticated: authData.authenticated, ...authData.user }),
+      );
     }
   }
 </script>
