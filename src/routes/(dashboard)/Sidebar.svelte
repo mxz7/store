@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from "$app/stores";
-  import { Code, Files, Settings } from "lucide-svelte";
+  import { Code, Files, LogOut, Settings } from "lucide-svelte";
 </script>
 
 <div class="drawer-side rounded-lg lg:h-fit">
@@ -39,6 +39,13 @@
       >
         <Code size={16} strokeWidth={2.5} />
         <span>API Key</span>
+      </a>
+    </li>
+
+    <li>
+      <a href="/logout" class="flex items-center">
+        <LogOut size={16} strokeWidth={2.5} />
+        <span>Log out</span>
       </a>
     </li>
   </ul>
