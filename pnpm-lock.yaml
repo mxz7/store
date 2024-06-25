@@ -59,8 +59,8 @@ devDependencies:
     specifier: ^0.21.2
     version: 0.21.4
   lucide-svelte:
-    specifier: ^0.363.0
-    version: 0.363.0(svelte@4.2.18)
+    specifier: ^0.396.0
+    version: 0.396.0(svelte@4.2.18)
   postcss:
     specifier: ^8.4.38
     version: 8.4.38
@@ -3337,8 +3337,8 @@ packages:
       oslo: 1.2.0
     dev: false
 
-  /lucide-svelte@0.363.0(svelte@4.2.18):
-    resolution: {integrity: sha512-zpUBFtMEEOOjILgiDX48ijibUww3JUCLrMo5YDGX/De/m6I+vn+oWIGvdyZtuc8nz/P8xHW9vWLKzIWeMrRYbA==}
+  /lucide-svelte@0.396.0(svelte@4.2.18):
+    resolution: {integrity: sha512-0oU3ZwQYzlFB1VyXcCRn1/cTsA+J7d+6MTC9t8lyIz12l0Rcrnoq0LUrGjX1I3r14uwSGrNDUTkdRdrHsl8L1Q==}
     peerDependencies:
       svelte: ^3 || ^4 || ^5.0.0-next.42
     dependencies:
