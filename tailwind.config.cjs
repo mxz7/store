@@ -1,10 +1,11 @@
+import catppuccin from "@catppuccin/daisyui";
+
 /** @type {import('tailwindcss').Config}*/
 const config = {
   content: ["./src/**/*.{html,js,svelte,ts}"],
 
   daisyui: {
-    themes: ["winter", "night"],
-    darkTheme: "night",
+    themes: [catppuccin("mocha")],
   },
 
   plugins: [require("daisyui")],
