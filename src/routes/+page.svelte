@@ -1,7 +1,5 @@
 <script>
   import { auth } from "$lib/stores";
-
-  $: console.log($auth);
 </script>
 
 <svelte:head>
