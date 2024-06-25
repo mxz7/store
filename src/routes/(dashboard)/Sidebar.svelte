@@ -1,6 +1,11 @@
 <script lang="ts">
   import { page } from "$app/stores";
-  import { Code, Files, LogOut, Settings } from "lucide-svelte";
+  import { auth } from "$lib/stores";
+  import { Files, FileWarning, LogOut, Settings, ShieldCheck, UserSearch } from "lucide-svelte";
+
+  $: {
+    console.log($auth);
+  }
 </script>
 
 <div class="drawer-side rounded-lg lg:h-fit">
@@ -30,17 +35,39 @@
       </a>
     </li>
 
-    <li>
-      <a
-        href="/settings/key"
-        class="{$page.url.pathname === '/settings/key'
-          ? 'font-semibold text-secondary'
-          : ''} flex items-center"
-      >
-        <Code size={16} strokeWidth={2.5} />
-        <span>API Key</span>
-      </a>
-    </li>
+    {#if $auth && $auth.authenticated && $auth}
+      <ul class="ml-2">
+        <li>
+          <h2 class="-ml-1 font-semibold">
+            <ShieldCheck size={16} strokeWidth={2.5} />
+            <span>Admin</span>
+          </h2>
+        </li>
+        <li>
+          <a
+            href="/dashboard/reports"
+            class="{$page.url.pathname === '/reports'
+              ? 'font-semibold text-secondary'
+              : ''} flex items-center"
+          >
+            <FileWarning size={16} strokeWidth={2.5} />
+            <span>Reports</span>
+          </a>
+        </li>
+
+        <li>
+          <a
+            href="/users"
+            class="{$page.url.pathname.startsWith('/users')
+              ? 'font-semibold text-secondary'
+              : ''} flex items-center"
+          >
+            <UserSearch size={16} strokeWidth={2.5} />
+            <span>Users</span>
+          </a>
+        </li>
+      </ul>
+    {/if}
 
     <li>
       <a href="/logout" class="flex items-center">
