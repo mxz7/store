@@ -13,7 +13,11 @@ export const lucia = new Lucia(adapter, {
     },
   },
   getUserAttributes(databaseUserAttributes) {
-    return databaseUserAttributes;
+    return {
+      username: databaseUserAttributes.username,
+      id: databaseUserAttributes.id,
+      admin: databaseUserAttributes.admin,
+    };
   },
 });
 
