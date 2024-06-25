@@ -2,10 +2,6 @@
   import { page } from "$app/stores";
   import { auth } from "$lib/stores";
   import { Files, FileWarning, LogOut, Settings, ShieldCheck, UserSearch } from "lucide-svelte";
-
-  $: {
-    console.log($auth);
-  }
 </script>
 
 <div class="drawer-side rounded-lg lg:h-fit">
