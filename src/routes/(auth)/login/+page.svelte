@@ -1,22 +1,11 @@
-<script>
-  import { goto } from "$app/navigation";
-  import { getLocalAuth } from "$lib/stores";
+<script lang="ts">
   import { KeyRound, User } from "lucide-svelte";
-  import toast from "svelte-french-toast";
   import { superForm } from "sveltekit-superforms";
 
   export let data;
 
-  const { form, errors, enhance, constraints, message, delayed } = superForm(data.form, {
+  const { form, errors, enhance, constraints, delayed } = superForm(data.form, {
     delayMs: 100,
-  });
-
-  message.subscribe((value) => {
-    if (value === "ok") {
-      toast.success("Logged in");
-      goto("/dashboard", { invalidateAll: true });
-      getLocalAuth();
-    }
   });
 </script>
 
