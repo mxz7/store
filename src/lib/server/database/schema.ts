@@ -6,7 +6,7 @@ export const users = sqliteTable("users", {
   password: text("password").notNull(),
   createdAt: integer("created_at", { mode: "timestamp" }).notNull(),
   createdIp: text("created_ip"),
-  admin: integer("level", { mode: "boolean" }).default(false),
+  admin: integer("admin", { mode: "boolean" }).default(false),
   invite: text("invite").references(() => invites.id, { onDelete: "set null" }),
 });
 
