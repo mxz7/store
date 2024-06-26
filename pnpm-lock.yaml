@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@libsql/client':
-    specifier: ^0.6.2
-    version: 0.6.2
+    specifier: ^0.7.0
+    version: 0.7.0
   '@lucia-auth/adapter-drizzle':
     specifier: ^1.0.7
     version: 1.0.7(lucia@3.2.0)
@@ -19,7 +19,7 @@ dependencies:
     version: 1.11.11
   drizzle-orm:
     specifier: ^0.31.2
-    version: 0.31.2(@libsql/client@0.6.2)
+    version: 0.31.2(@libsql/client@0.7.0)
   lucia:
     specifier: ^3.2.0
     version: 3.2.0
@@ -1095,20 +1095,21 @@ packages:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.4.15
 
-  /@libsql/client@0.6.2:
-    resolution: {integrity: sha512-xRNfRLv/dOCbV4qd+M0baQwGmvuZpMd2wG2UAPs8XmcdaPvu5ErkcaeITkxlm3hDEJVabQM1cFhMBxsugWW9fQ==}
+  /@libsql/client@0.7.0:
+    resolution: {integrity: sha512-1aLDtWzsErr68GZ640TVyOLkL/+lB2YK8cYvJIfiI7Mt+DEPB22Jkoz2QfBDg5PVGX/efeRHog2j/oVbUhxO8Q==}
     dependencies:
-      '@libsql/core': 0.6.2
+      '@libsql/core': 0.7.0
       '@libsql/hrana-client': 0.6.2
       js-base64: 3.7.7
       libsql: 0.3.19
+      promise-limit: 2.7.0
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
     dev: false
 
-  /@libsql/core@0.6.2:
-    resolution: {integrity: sha512-c2P4M+4u/4b2L02A0KjggO3UW51rGkhxr/7fzJO0fEAqsqrWGxuNj2YtRkina/oxfYvAof6xjp8RucNoIV/Odw==}
+  /@libsql/core@0.7.0:
+    resolution: {integrity: sha512-hCYfXa0S4t9CJtxZIWacboylrcx94ZQO0dEngH4f0f/LHg6ymHSZiubbojAwD7tNy94ahICoGPjEi6aEIyhlcQ==}
     dependencies:
       js-base64: 3.7.7
     dev: false
@@ -2549,7 +2550,7 @@ packages:
       - supports-color
     dev: true
 
-  /drizzle-orm@0.31.2(@libsql/client@0.6.2):
+  /drizzle-orm@0.31.2(@libsql/client@0.7.0):
     resolution: {integrity: sha512-QnenevbnnAzmbNzQwbhklvIYrDE8YER8K7kSrAWQSV1YvFCdSQPzj+jzqRdTSsV2cDqSpQ0NXGyL1G9I43LDLg==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
@@ -2632,7 +2633,7 @@ packages:
       sqlite3:
         optional: true
     dependencies:
-      '@libsql/client': 0.6.2
+      '@libsql/client': 0.7.0
     dev: false
 
   /eastasianwidth@0.2.0:
@@ -3699,6 +3700,10 @@ packages:
     engines: {node: '>=14'}
     hasBin: true
     dev: true
+
+  /promise-limit@2.7.0:
+    resolution: {integrity: sha512-7nJ6v5lnJsXwGprnGXga4wx6d1POjvi5Qmf1ivTRxTjH4Z/9Czja/UCMLVmB9N93GeWOU93XaFaEt6jbuoagNw==}
+    dev: false
 
   /property-expr@2.0.6:
     resolution: {integrity: sha512-SVtmxhRE/CGkn3eZY1T6pC8Nln6Fr/lu1mKSgRud0eC73whjGfoAogbn78LkD8aFL0zz3bAFerKSnOl7NlErBA==}
