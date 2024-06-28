@@ -12,7 +12,7 @@ export async function POST({ locals, getClientAddress, request }) {
 
   if (!auth.authenticated) return error(401);
 
-  const { type, size } = await request.json();
+  const { type, size, label } = await request.json();
 
   if (size > 1000000000) return error(400);
 
@@ -32,10 +32,11 @@ export async function POST({ locals, getClientAddress, request }) {
     bytes: size,
     createdIp: getClientAddress(),
     id,
+    label,
     createdByUser: auth.user.id,
     expireAt: dayjs().add(1, "year").toDate(),
     createdAt: new Date(),
   });
 
-  return json({ url: presigned });
+  return json({ url: presigned, id });
 }

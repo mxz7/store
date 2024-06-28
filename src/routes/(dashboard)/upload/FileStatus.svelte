@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { formatBytes } from "$lib/format";
   import { Check, CircleX } from "lucide-svelte";
   import { fly } from "svelte/transition";
   import type { FileData } from "./file";
@@ -12,8 +13,15 @@
   class="w-full rounded-lg border border-accent border-opacity-5 bg-base-200 p-6"
   in:fly|global={{ y: -50, duration: 750 }}
 >
-  <h2 class="text-lg font-bold text-primary">{data.name}</h2>
-  <p>bytes: {data.size}</p>
+  <div class="flex w-full gap-4 text-lg font-bold text-primary">
+    <h2 class="max-w-[50%] overflow-hidden text-ellipsis text-nowrap">{data.name}</h2>
+    {#if data.uploadedId}
+      <a href="https://cdn.maxz.dev/{data.uploadedId}" target="_blank" class="link link-primary">
+        {data.uploadedId}
+      </a>
+    {/if}
+  </div>
+  <p>{formatBytes(data.size)}</p>
 
   <div class="mt-1 flex w-full items-center gap-2">
     {#if data.status === "processing" || data.status === "uploading"}

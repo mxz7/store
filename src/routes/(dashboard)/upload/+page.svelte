@@ -37,7 +37,7 @@
       headers: {
         Accept: "application/json",
       },
-      body: JSON.stringify({ type, size }),
+      body: JSON.stringify({ type, size, label: file.name }),
     });
 
     if (presigned.status !== 200) {
@@ -48,16 +48,18 @@
 
     files[index].progress.set(60, { duration: 10000 });
 
-    const url = (await presigned.json()).url;
-
-    console.log(presigned);
+    const { url, id: uploadedID } = await presigned.json();
 
     const uploadRes = await fetch(url, { method: "PUT", body: file });
 
-    files[index].status = "done";
-    files[index].progress.set(100, { duration: 2000 });
-
-    console.log(uploadRes);
+    if (uploadRes.status === 200) {
+      files[index].status = "done";
+      files[index].progress.set(100, { duration: 2000 });
+      files[index].uploadedId = uploadedID;
+    } else {
+      console.error(uploadRes);
+      files[index].status = "error";
+    }
   }
 
   formFiles.subscribe((files) => {
