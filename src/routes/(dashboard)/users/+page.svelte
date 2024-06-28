@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { formatBytes } from "$lib/format.js";
   import dayjs from "dayjs";
   import { ArrowLeft, ArrowRight } from "lucide-svelte";
 
@@ -34,7 +35,7 @@
             <td>{dayjs(row.createdAt).format("YYYY-MM-DD HH:mm:ss")}</td>
             <td>{row.ip}</td>
             <td>{row.uploaded.toLocaleString()}</td>
-            <td>{row.size}</td>
+            <td>{formatBytes(parseInt(row.size))}</td>
           </tr>
         {/each}
       </tbody>
