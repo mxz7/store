@@ -9,8 +9,8 @@
   <ul class="menu min-h-full w-80 bg-base-200 p-4 text-base-content">
     <li>
       <a
-        href="/dashboard"
-        class="{$page.url.pathname === '/dashboard'
+        href="/files"
+        class="{$page.url.pathname === '/files'
           ? 'font-semibold text-secondary'
           : ''} flex items-center"
       >
