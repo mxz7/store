@@ -85,6 +85,10 @@
   }
 </script>
 
+<svelte:head>
+  <title>upload :: files.maxz.dev</title>
+</svelte:head>
+
 <label
   class="flex h-fit w-full cursor-pointer items-center justify-center rounded-lg border border-accent border-opacity-15 bg-base-300 p-4 duration-200 hover:border-opacity-25"
   for="file"

@@ -7,7 +7,7 @@
 </script>
 
 <svelte:head>
-  <title>users / dashboard / files</title>
+  <title>users :: files.maxz.devs</title>
 </svelte:head>
 
 {#key data}
