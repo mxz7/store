@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import { auth } from "$lib/stores";
-  import { Files, FileWarning, LogOut, Settings, ShieldCheck, UserSearch } from "lucide-svelte";
+  import { Files, LogOut, ShieldCheck, Upload, UserSearch } from "lucide-svelte";
 </script>
 
 <div class="drawer-side rounded-lg lg:h-fit">
@@ -21,13 +21,13 @@
 
     <li>
       <a
-        href="/settings"
-        class="{$page.url.pathname === '/settings'
+        href="/upload"
+        class="{$page.url.pathname === '/upload'
           ? 'font-semibold text-secondary'
           : ''} flex items-center"
       >
-        <Settings size={16} strokeWidth={2.5} />
-        <span>Settings</span>
+        <Upload size={16} strokeWidth={2.5} />
+        <span>Upload</span>
       </a>
     </li>
 
@@ -38,17 +38,6 @@
             <ShieldCheck size={16} strokeWidth={2.5} />
             <span>Admin</span>
           </h2>
-        </li>
-        <li>
-          <a
-            href="/dashboard/reports"
-            class="{$page.url.pathname === '/reports'
-              ? 'font-semibold text-secondary'
-              : ''} flex items-center"
-          >
-            <FileWarning size={16} strokeWidth={2.5} />
-            <span>Reports</span>
-          </a>
         </li>
 
         <li>
