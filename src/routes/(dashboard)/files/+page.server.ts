@@ -1,12 +1,22 @@
 import db from "$lib/server/database/db.js";
 import { uploads } from "$lib/server/database/schema.js";
 import { redirect } from "@sveltejs/kit";
-import { desc } from "drizzle-orm";
+import { desc, eq, sql } from "drizzle-orm";
+import { fail, message, superValidate } from "sveltekit-superforms";
+import { zod } from "sveltekit-superforms/adapters";
+import { object, string } from "zod";
 
-export async function load({ locals, url }) {
+const renameSchema = object({
+  id: string(),
+  label: string().min(0).max(100),
+});
+
+export async function load({ locals, url, depends }) {
+  depends("file_uploads");
+
   const auth = await locals.validate();
 
-  if (!auth) return redirect(302, "/login");
+  if (!auth.authenticated) return redirect(302, "/login");
 
   let page = parseInt(url.searchParams.get("page") || "1") || 1;
 
@@ -18,6 +28,8 @@ export async function load({ locals, url }) {
       createdAt: uploads.createdAt,
       bytes: uploads.bytes,
       label: uploads.label,
+      expireAt: uploads.expireAt,
+      deleted: sql<boolean>`false`,
     })
     .from(uploads)
     .orderBy(desc(uploads.createdAt))
@@ -26,8 +38,24 @@ export async function load({ locals, url }) {
 
   if (files.length === 0 && page > 1) {
     url.searchParams.set("page", (page - 1).toString());
-    return redirect(302, `/dashboard?${url.searchParams.toString()}`);
+    return redirect(302, `/files?${url.searchParams.toString()}`);
   }
 
-  return { files, user: auth.user };
+  return { files, user: auth.user, form: await superValidate(zod(renameSchema)) };
 }
+
+export const actions = {
+  rename: async ({ locals, request }) => {
+    const auth = await locals.validate();
+
+    if (!auth.authenticated) return fail(400);
+
+    const form = await superValidate(request, zod(renameSchema));
+
+    if (!form.valid) return fail(400, { form });
+
+    await db.update(uploads).set({ label: form.data.label }).where(eq(uploads.id, form.data.id));
+
+    return message(form, "success");
+  },
+};
