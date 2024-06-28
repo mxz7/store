@@ -8,7 +8,12 @@ import { eq } from "drizzle-orm";
 import { message, setError, superValidate } from "sveltekit-superforms";
 import { zod } from "sveltekit-superforms/adapters";
 
-export async function load({ locals, request }) {
+export const config = {
+  runtime: "nodejs20.x",
+  regions: ["lhr1"],
+};
+
+export async function load({ locals }) {
   const auth = await locals.validate();
 
   if (auth.authenticated) return redirect(302, "/dashboard");
