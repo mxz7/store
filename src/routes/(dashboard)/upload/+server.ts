@@ -7,6 +7,11 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { error, json } from "@sveltejs/kit";
 import dayjs from "dayjs";
 
+export const config = {
+  runtime: "nodejs20.x",
+  regions: ["lhr1"],
+};
+
 export async function POST({ locals, getClientAddress, request }) {
   const auth = await locals.validate(false);
 
