@@ -32,7 +32,7 @@
 
     const index = files.findIndex((i) => i.id === id);
 
-    const presigned = await fetch("/upload", {
+    const presigned = await fetch("/api/upload", {
       method: "POST",
       headers: {
         Accept: "application/json",
