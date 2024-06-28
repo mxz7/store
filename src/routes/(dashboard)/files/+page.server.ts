@@ -61,7 +61,9 @@ export const actions = {
       .limit(1)
       .then((r) => r[0]);
 
-    if (upload.createdBy !== auth.user.id) return fail(400, { form });
+    if (!upload) return fail(404, { form });
+
+    if (upload.createdBy !== auth.user.id) return fail(403, { form });
 
     await db.update(uploads).set({ label: form.data.label }).where(eq(uploads.id, form.data.id));
 
