@@ -31,7 +31,7 @@
       {:else if !$auth.authenticated}
         <a href="/login" class="btn btn-ghost text-lg text-primary">Log in</a>
       {:else}
-        <a href="/dashboard" class="btn btn-ghost text-primary">
+        <a href="/files" class="btn btn-ghost text-primary">
           <CircleUser strokeWidth={2.5} />
         </a>
       {/if}
