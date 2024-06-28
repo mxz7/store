@@ -1,8 +1,11 @@
 <script lang="ts">
+  import { Check, CircleX } from "lucide-svelte";
   import { fly } from "svelte/transition";
   import type { FileData } from "./file";
 
   export let data: FileData;
+
+  let progress = data.progress;
 </script>
 
 <div
@@ -12,5 +15,22 @@
   <h2 class="text-lg font-bold text-primary">{data.name}</h2>
   <p>bytes: {data.size}</p>
 
-  <progress class="progress progress-success w-full" value={data.progress}></progress>
+  <div class="mt-1 flex w-full items-center gap-2">
+    {#if data.status === "processing" || data.status === "uploading"}
+      <span class="loading loading-spinner loading-xs" />
+    {:else if data.status === "error"}
+      <span class="tooltip tooltip-error" data-tip="failed to upload">
+        <CircleX class="text-error" size={16} />
+      </span>
+    {:else if data.status === "done"}
+      <span class="tooltip tooltip-success" data-tip="successfully uploaded">
+        <Check class="text-success" size={16} />
+      </span>
+    {/if}
+    <progress
+      class="progress {data.status === 'error' ? 'progress-error' : 'progress-success'} w-full"
+      value={$progress}
+      max="100"
+    ></progress>
+  </div>
 </div>

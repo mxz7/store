@@ -1,5 +1,8 @@
 <script lang="ts">
+  import { nanoid } from "$lib/nanoid";
   import { CloudUpload } from "lucide-svelte";
+  import { cubicOut } from "svelte/easing";
+  import { tweened } from "svelte/motion";
   import { writable } from "svelte/store";
   import type { FileData } from "./file";
   import FileStatus from "./FileStatus.svelte";
@@ -13,16 +16,48 @@
 
     console.log(type, size);
 
+    const id = nanoid();
+
     files = [
       ...files,
       {
+        id,
         status: "processing",
-        progress: 0,
+        progress: tweened(0, { easing: cubicOut }),
         name: file.name,
         type,
         size,
       },
     ];
+
+    const index = files.findIndex((i) => i.id === id);
+
+    const presigned = await fetch("/upload", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+      },
+      body: JSON.stringify({ type, size }),
+    });
+
+    if (presigned.status !== 200) {
+      files[index].status = "error";
+      console.error(presigned);
+      return;
+    }
+
+    files[index].progress.set(60, { duration: 10000 });
+
+    const url = (await presigned.json()).url;
+
+    console.log(presigned);
+
+    const uploadRes = await fetch(url, { method: "PUT", body: file });
+
+    files[index].status = "done";
+    files[index].progress.set(100, { duration: 2000 });
+
+    console.log(uploadRes);
   }
 
   formFiles.subscribe((files) => {
