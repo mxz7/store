@@ -2,8 +2,9 @@
   import { invalidate } from "$app/navigation";
   import { formatBytes } from "$lib/format.js";
   import dayjs from "dayjs";
-  import { Pen, Trash } from "lucide-svelte";
+  import { Pen } from "lucide-svelte";
   import { superForm } from "sveltekit-superforms";
+  import DeleteButton from "./DeleteButton.svelte";
 
   export let data;
 
@@ -20,7 +21,7 @@
 </script>
 
 <svelte:head>
-  <title>files :: files.maxz.dev</title>
+  <title>uploads :: files.maxz.dev</title>
 </svelte:head>
 
 <dialog class="modal" bind:this={renameModal}>
@@ -122,12 +123,7 @@
               <Pen size={16} strokeWidth={2.5} />
             </button>
 
-            <button
-              class="btn btn-ghost tooltip tooltip-top tooltip-error text-error"
-              data-tip="delete"
-            >
-              <Trash size={16} strokeWidth={2.5} />
-            </button>
+            <DeleteButton id={file.id} />
           </td>
         </tr>
       {/each}
