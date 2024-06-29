@@ -1,5 +1,6 @@
 <script lang="ts">
   import { invalidate } from "$app/navigation";
+  import Pages from "$lib/components/Pages.svelte";
   import { formatBytes } from "$lib/format.js";
   import dayjs from "dayjs";
   import { Pen } from "lucide-svelte";
@@ -129,4 +130,6 @@
       {/each}
     </tbody>
   </table>
+
+  <Pages currentPage={data.page} lastPage={data.lastPage} route="/files" />
 </div>
