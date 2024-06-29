@@ -1,7 +1,7 @@
 <script lang="ts">
+  import Pages from "$lib/components/Pages.svelte";
   import { formatBytes } from "$lib/format.js";
   import dayjs from "dayjs";
-  import { ArrowLeft, ArrowRight } from "lucide-svelte";
 
   export let data;
 </script>
@@ -40,24 +40,6 @@
         {/each}
       </tbody>
     </table>
-    <div class="mt-2 flex w-full justify-center">
-      <div class="join grid grid-cols-3">
-        <a
-          class="btn btn-ghost join-item {data.page === 1 ? 'btn-disabled' : ''}"
-          href="/dashboard/users?page={data.page - 1 < 1 ? 1 : data.page - 1}"
-        >
-          <ArrowLeft />
-        </a>
-        <span class="btn btn-ghost join-item">{data.page}</span>
-        <a
-          class="btn btn-ghost join-item {data.page === data.lastPage ? 'btn-disabled' : ''}"
-          href="/dashboard/users?page={data.page + 1 > data.lastPage
-            ? data.lastPage
-            : data.page + 1}"
-        >
-          <ArrowRight />
-        </a>
-      </div>
-    </div>
+    <Pages currentPage={data.page} lastPage={data.page} route="/users" />
   </div>
 {/key}
