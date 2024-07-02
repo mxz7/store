@@ -1,4 +1,5 @@
 <script>
+  import Upload from "$lib/components/upload/Upload.svelte";
   import { auth } from "$lib/stores";
 </script>
 
@@ -24,6 +25,12 @@
       <div class="mt-2 flex w-full justify-center gap-4">
         <a href="/login" class="btn">Log in</a>
         <a href="/signup" class="btn">Sign up</a>
+      </div>
+    {:else if $auth.authenticated}
+      <div class="flex justify-center">
+        <div class="w-full max-w-3xl">
+          <Upload />
+        </div>
       </div>
     {/if}
   </div>
