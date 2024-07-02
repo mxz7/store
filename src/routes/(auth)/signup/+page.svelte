@@ -17,7 +17,7 @@
   message.subscribe((value) => {
     if (value === "ok") {
       toast.success("Logged in");
-      goto("/dashboard", { invalidateAll: true });
+      goto("/files", { invalidateAll: true });
       getLocalAuth();
     }
   });

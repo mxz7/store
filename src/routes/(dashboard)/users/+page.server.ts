@@ -8,7 +8,7 @@ const PER_PAGE = 15;
 export async function load({ url, parent }) {
   const { auth } = await parent();
 
-  if (!auth.authenticated || !auth.user.admin) return redirect(302, "/dashboard");
+  if (!auth.authenticated || !auth.user.admin) return redirect(302, "/files");
 
   let page = parseInt(url.searchParams.get("page") || "1") || 1;
 

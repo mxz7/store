@@ -27,7 +27,7 @@
         {#each data.rows as row}
           <tr>
             <th>
-              <a href="/dashboard/users/{row.id}" class="link">
+              <a href="/users/{row.id}" class="link">
                 {row.username}
               </a>
             </th>
