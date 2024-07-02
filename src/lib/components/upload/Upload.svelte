@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { removeExifData } from "$lib/exif";
   import { nanoid } from "$lib/nanoid";
   import { CloudUpload } from "lucide-svelte";
   import { cubicOut } from "svelte/easing";
@@ -10,8 +11,16 @@
   let formFiles = writable<FileList>();
   let files: FileData[] = [];
   let expireIn: number = 31556952000;
+  let stripExif = true;
 
   async function handleFile(file: File) {
+    if (stripExif && file.type === "image/jpeg") {
+      console.log("removing exif");
+      file = await removeExifData(file);
+
+      console.log("removed exif");
+    }
+
     const type = file.type;
     const size = file.size;
 
@@ -91,7 +100,7 @@
 </svelte:head>
 
 <h2 class="pb-2 font-semibold">Expire in:</h2>
-<div class="flex w-full gap-4 pb-4">
+<div class="flex gap-4 pb-4">
   <input
     type="radio"
     name="expire"
@@ -132,6 +141,17 @@
     value={31556952000}
     bind:group={expireIn}
   />
+</div>
+
+<div class="flex items-center gap-2 pb-4">
+  <input
+    type="checkbox"
+    name="stripexif"
+    id="stripexif"
+    bind:checked={stripExif}
+    class="checkbox-primary checkbox checkbox-xs"
+  />
+  <label for="stripexif" class="text-sm">Strip EXIF data from JPEG images</label>
 </div>
 
 <label
