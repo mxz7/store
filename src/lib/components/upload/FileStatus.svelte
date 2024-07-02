@@ -1,24 +1,42 @@
 <script lang="ts">
   import { formatBytes } from "$lib/format";
-  import { Check, CircleX } from "lucide-svelte";
+  import { Check, CircleX, Copy } from "lucide-svelte";
   import { fly } from "svelte/transition";
+  import CopyClipboard from "../CopyClipboard.svelte";
   import type { FileData } from "./file";
 
   export let data: FileData;
 
   let progress = data.progress;
+
+  function copyId() {
+    const component = new CopyClipboard({
+      target: document.querySelector("body"),
+      props: { text: `https://cdn.maxz.dev/${data.uploadedId}` },
+    });
+
+    component.$destroy();
+  }
 </script>
 
 <div
   class="w-full rounded-lg border border-accent border-opacity-5 bg-base-200 p-6"
   in:fly|global={{ y: -50, duration: 750 }}
 >
-  <div class="flex w-full gap-4 text-lg font-bold text-primary">
-    <h2 class="max-w-[50%] overflow-hidden text-ellipsis text-nowrap">{data.name}</h2>
+  <div class="flex w-full items-center gap-4 text-lg font-bold text-primary">
+    <h2 class="max-w-[75%] overflow-hidden text-ellipsis text-nowrap">{data.name}</h2>
     {#if data.uploadedId}
-      <a href="https://cdn.maxz.dev/{data.uploadedId}" target="_blank" class="link link-primary">
+      <a
+        href="https://cdn.maxz.dev/{data.uploadedId}"
+        target="_blank"
+        class="link link-primary flex-1"
+      >
         {data.uploadedId}
       </a>
+
+      <button on:click={copyId} class=" btn btn-ghost tooltip" data-tip="Copy to clipboard">
+        <Copy size={16} />
+      </button>
     {/if}
   </div>
   <p>{formatBytes(data.size)}</p>
