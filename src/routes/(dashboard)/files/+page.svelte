@@ -1,9 +1,10 @@
 <script lang="ts">
-  import { invalidate } from "$app/navigation";
+  import { goto, invalidate } from "$app/navigation";
+  import { page } from "$app/stores";
   import Pages from "$lib/components/Pages.svelte";
   import { formatBytes } from "$lib/format.js";
   import dayjs from "dayjs";
-  import { Pen } from "lucide-svelte";
+  import { ArrowDownNarrowWide, ArrowDownWideNarrow, Pen } from "lucide-svelte";
   import { superForm } from "sveltekit-superforms";
   import DeleteButton from "./DeleteButton.svelte";
 
@@ -64,10 +65,122 @@
     <!-- head -->
     <thead>
       <tr>
-        <th>File</th>
-        <th>Size</th>
-        <th>Uploaded At</th>
-        <th>Expires At</th>
+        <th>
+          <button
+            class="flex items-center gap-2"
+            on:click={() => {
+              const params = new URLSearchParams($page.url.searchParams);
+
+              if (data.orderDisplay.column === "label") {
+                if (data.orderDisplay.direction === "asc") {
+                  params.set("order", "filede");
+                } else {
+                  params.set("order", "fileas");
+                }
+              } else {
+                params.set("order", "filede");
+              }
+
+              goto(`?${params.toString()}`);
+            }}
+          >
+            {#if data.orderDisplay.column === "label"}
+              {#if data.orderDisplay.direction === "desc"}
+                <ArrowDownWideNarrow size={16} />
+              {:else}
+                <ArrowDownNarrowWide size={16} />
+              {/if}
+            {/if}
+            File
+          </button>
+        </th>
+        <th>
+          <button
+            class="flex items-center gap-2"
+            on:click={() => {
+              const params = new URLSearchParams($page.url.searchParams);
+
+              if (data.orderDisplay.column === "size") {
+                if (data.orderDisplay.direction === "asc") {
+                  params.set("order", "sizede");
+                } else {
+                  params.set("order", "sizeas");
+                }
+              } else {
+                params.set("order", "sizede");
+              }
+
+              goto(`?${params.toString()}`);
+            }}
+          >
+            {#if data.orderDisplay.column === "size"}
+              {#if data.orderDisplay.direction === "desc"}
+                <ArrowDownWideNarrow size={16} />
+              {:else}
+                <ArrowDownNarrowWide size={16} />
+              {/if}
+            {/if}
+            Size
+          </button>
+        </th>
+        <th>
+          <button
+            class="flex items-center gap-2"
+            on:click={() => {
+              const params = new URLSearchParams($page.url.searchParams);
+
+              if (data.orderDisplay.column === "date") {
+                if (data.orderDisplay.direction === "asc") {
+                  params.set("order", "datede");
+                } else {
+                  params.set("order", "dateas");
+                }
+              } else {
+                params.set("order", "datede");
+              }
+
+              goto(`?${params.toString()}`);
+            }}
+          >
+            {#if data.orderDisplay.column === "date"}
+              {#if data.orderDisplay.direction === "desc"}
+                <ArrowDownWideNarrow size={16} />
+              {:else}
+                <ArrowDownNarrowWide size={16} />
+              {/if}
+            {/if}
+            Uploaded At
+          </button>
+        </th>
+        <th>
+          <button
+            class="flex items-center gap-2"
+            on:click={() => {
+              const params = new URLSearchParams($page.url.searchParams);
+
+              if (data.orderDisplay.column === "expire") {
+                if (data.orderDisplay.direction === "asc") {
+                  params.set("order", "expirede");
+                } else {
+                  params.set("order", "expireas");
+                }
+              } else {
+                params.set("order", "expirede");
+              }
+
+              goto(`?${params.toString()}`);
+            }}
+          >
+            {#if data.orderDisplay.column === "expire"}
+              {#if data.orderDisplay.direction === "desc"}
+                <ArrowDownWideNarrow size={16} />
+              {:else}
+                <ArrowDownNarrowWide size={16} />
+              {/if}
+            {/if}
+            Expires At
+          </button>
+        </th>
         <th></th>
       </tr>
     </thead>
