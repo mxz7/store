@@ -17,9 +17,10 @@ export async function POST({ locals, getClientAddress, request }) {
 
   if (!auth.authenticated) return error(401);
 
-  const { type, size, label } = await request.json();
+  const { type, size, label, expire } = await request.json();
 
   if (size > 1000000000) return error(400);
+  if (expire > 31556952000) return error(400);
 
   const id = `${nanoid()}.${type.split("/")[1]}`;
 
@@ -39,7 +40,7 @@ export async function POST({ locals, getClientAddress, request }) {
     id,
     label,
     createdByUser: auth.user.id,
-    expireAt: dayjs().add(1, "year").toDate(),
+    expireAt: dayjs().add(expire, "milliseconds").toDate(),
     createdAt: new Date(),
   });
 

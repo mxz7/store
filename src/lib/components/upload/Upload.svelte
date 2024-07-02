@@ -9,6 +9,7 @@
 
   let formFiles = writable<FileList>();
   let files: FileData[] = [];
+  let expireIn: number = 31556952000;
 
   async function handleFile(file: File) {
     const type = file.type;
@@ -37,7 +38,7 @@
       headers: {
         Accept: "application/json",
       },
-      body: JSON.stringify({ type, size, label: file.name }),
+      body: JSON.stringify({ type, size, label: file.name, expire: expireIn }),
     });
 
     if (presigned.status !== 200) {
@@ -88,6 +89,50 @@
 <svelte:head>
   <title>upload :: files.maxz.dev</title>
 </svelte:head>
+
+<h2 class="pb-2 font-semibold">Expire in:</h2>
+<div class="flex w-full gap-4 pb-4">
+  <input
+    type="radio"
+    name="expire"
+    class="btn"
+    aria-label="1 hour"
+    value={3600000}
+    bind:group={expireIn}
+  />
+  <input
+    type="radio"
+    name="expire"
+    class="btn"
+    aria-label="1 day"
+    value={86400000}
+    bind:group={expireIn}
+  />
+  <input
+    type="radio"
+    name="expire"
+    class="btn"
+    aria-label="1 week"
+    value={604800000}
+    bind:group={expireIn}
+  />
+  <input
+    type="radio"
+    name="expire"
+    class="btn"
+    aria-label="1 month"
+    value={2629746000}
+    bind:group={expireIn}
+  />
+  <input
+    type="radio"
+    name="expire"
+    class="btn"
+    aria-label="1 year"
+    value={31556952000}
+    bind:group={expireIn}
+  />
+</div>
 
 <label
   class="flex h-fit w-full cursor-pointer items-center justify-center rounded-lg border border-accent border-opacity-15 bg-base-300 p-4 duration-200 hover:border-opacity-25"
