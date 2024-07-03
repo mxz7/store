@@ -21,8 +21,6 @@ export async function load({ locals, depends }) {
     .leftJoin(users, eq(users.id, invites.usedBy))
     .orderBy(desc(invites.createdAt));
 
-  console.log(invitesData);
-
   return { invites: invitesData };
 }
 
