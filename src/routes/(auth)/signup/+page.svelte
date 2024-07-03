@@ -16,7 +16,14 @@
 
   message.subscribe((value) => {
     if (value === "ok") {
-      toast.success("Logged in");
+      toast.success("Logged in", {
+        style:
+          "--tw-bg-opacity: 1; background-color: var(--fallback-b3,oklch(var(--b3)/var(--tw-bg-opacity))); --tw-text-opacity: 1; color: var(--fallback-bc,oklch(var(--bc)/var(--tw-text-opacity)));",
+        iconTheme: {
+          primary: "#a6e3a1",
+          secondary: "#FFFFFF",
+        },
+      });
       goto("/files", { invalidateAll: true });
       getLocalAuth();
     }

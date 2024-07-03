@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import { auth } from "$lib/stores";
-  import { Files, LogOut, ShieldCheck, Upload, UserSearch } from "lucide-svelte";
+  import { Files, Gift, LogOut, ShieldCheck, Upload, UserSearch } from "lucide-svelte";
 </script>
 
 <div class="drawer-side rounded-lg lg:h-fit">
@@ -38,6 +38,18 @@
             <ShieldCheck size={16} strokeWidth={2.5} />
             <span>Admin</span>
           </h2>
+        </li>
+
+        <li>
+          <a
+            href="/invites"
+            class="{$page.url.pathname.startsWith('/invites')
+              ? 'font-semibold text-secondary'
+              : ''} flex items-center"
+          >
+            <Gift size={16} strokeWidth={2.5} />
+            <span>Invites</span>
+          </a>
         </li>
 
         <li>
