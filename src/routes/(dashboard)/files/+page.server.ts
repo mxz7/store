@@ -77,7 +77,8 @@ export async function load({ locals, url, depends }) {
       .from(uploads)
       .orderBy(orderBy)
       .offset((page - 1) * 25)
-      .limit(25),
+      .limit(25)
+      .where(eq(uploads.createdByUser, auth.user.id)),
     db
       .select({ count: count() })
       .from(uploads)
