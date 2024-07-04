@@ -31,7 +31,7 @@
       </a>
     </li>
 
-    {#if $auth && $auth.authenticated && $auth}
+    {#if $auth && $auth.authenticated && $auth.user.admin}
       <ul class="ml-2">
         <li>
           <h2 class="-ml-1 font-semibold">
