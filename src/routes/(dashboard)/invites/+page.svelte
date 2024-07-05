@@ -3,8 +3,9 @@
   import { invalidate } from "$app/navigation";
   import CopyClipboard from "$lib/components/CopyClipboard.svelte";
   import dayjs from "dayjs";
-  import { Copy } from "lucide-svelte";
+  import { Copy, Trash } from "lucide-svelte";
   import toast from "svelte-french-toast";
+  import DeleteButton from "./DeleteButton.svelte";
 
   export let data;
 
@@ -94,7 +95,7 @@
           <td>{invite.label}</td>
           <td>{dayjs(invite.createdAt).format("YYYY-MM-DD")}</td>
           <td>{invite.username}</td>
-          <td>
+          <td class="flex gap-2">
             <button
               on:click={() => copyId(invite.id)}
               class=" btn btn-ghost tooltip"
@@ -102,6 +103,8 @@
             >
               <Copy size={16} />
             </button>
+
+            <DeleteButton id={invite.id} />
           </td>
         </tr>
       {/each}
