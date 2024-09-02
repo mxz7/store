@@ -28,7 +28,7 @@
       </div>
     {:else if $auth.authenticated}
       <div class="flex justify-center">
-        <div class="w-full max-w-3xl">
+        <div class="w-full max-w-3xl pb-8">
           <Upload />
         </div>
       </div>
