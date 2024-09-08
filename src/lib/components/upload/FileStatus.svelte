@@ -44,7 +44,7 @@
         {data.uploadedId}
       </a>
 
-      <button on:click={copyId} class=" btn btn-ghost tooltip" data-tip="Copy to clipboard">
+      <button on:click={copyId} class="btn btn-ghost tooltip" data-tip="Copy to clipboard">
         <Copy size={16} />
       </button>
     {/if}

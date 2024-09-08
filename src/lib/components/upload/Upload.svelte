@@ -1,10 +1,12 @@
 <script lang="ts">
   import { removeExifData } from "$lib/exif";
   import { nanoid } from "$lib/nanoid";
-  import { CloudUpload } from "lucide-svelte";
+  import { CloudUpload, Copy } from "lucide-svelte";
+  import toast from "svelte-french-toast";
   import { cubicOut } from "svelte/easing";
   import { tweened } from "svelte/motion";
   import { writable } from "svelte/store";
+  import CopyClipboard from "../CopyClipboard.svelte";
   import type { FileData } from "./file";
   import FileStatus from "./FileStatus.svelte";
 
@@ -93,6 +95,29 @@
       handleFile(file);
     }
   }
+
+  function copyAll() {
+    const component = new CopyClipboard({
+      target: document.querySelector("body"),
+      props: {
+        text: files
+          .filter((i) => i.status === "done")
+          .map((i) => `https://cdn.maxz.dev/${i.uploadedId}`)
+          .join("\n"),
+      },
+    });
+
+    component.$destroy();
+
+    toast.success("Copied to your clipboard", {
+      style:
+        "--tw-bg-opacity: 1; background-color: var(--fallback-b3,oklch(var(--b3)/var(--tw-bg-opacity))); --tw-text-opacity: 1; color: var(--fallback-bc,oklch(var(--bc)/var(--tw-text-opacity)));",
+      iconTheme: {
+        primary: "#a6e3a1",
+        secondary: "#FFFFFF",
+      },
+    });
+  }
 </script>
 
 <svelte:head>
@@ -141,6 +166,12 @@
     value={31556952000}
     bind:group={expireIn}
   />
+
+  <div class="grow" />
+
+  {#if files.filter((i) => i.status === "done").length > 1}
+    <button on:click={copyAll} class="btn text-primary"><Copy size={16} /> Copy all</button>
+  {/if}
 </div>
 
 <div class="flex items-center gap-2 pb-4">
@@ -170,7 +201,7 @@
   </div>
 </label>
 
-<div class="mt-14 grid w-full grid-cols-1 gap-4 px-4">
+<div class="mt-4 grid w-full grid-cols-1 gap-4 px-4">
   {#each files as file}
     <FileStatus data={file} />
   {/each}
