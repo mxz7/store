@@ -20,7 +20,7 @@ export async function POST({ locals, getClientAddress, request }) {
   const { type, size, label, expire } = await request.json();
 
   if (size > 1000000000) return error(400);
-  if (expire > 31556952000) return error(400);
+  if (expire > 31556952000 && !auth.user.admin) return error(400);
 
   const id = `${nanoid()}.${type.split("/")[1]}`;
 

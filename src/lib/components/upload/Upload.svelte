@@ -1,6 +1,7 @@
 <script lang="ts">
   import { removeExifData } from "$lib/exif";
   import { nanoid } from "$lib/nanoid";
+  import { auth } from "$lib/stores";
   import { CloudUpload, Copy } from "lucide-svelte";
   import toast from "svelte-french-toast";
   import { cubicOut } from "svelte/easing";
@@ -125,51 +126,62 @@
 </svelte:head>
 
 <h2 class="pb-2 font-semibold">Expire in:</h2>
-<div class="flex gap-4 pb-4">
-  <input
-    type="radio"
-    name="expire"
-    class="btn"
-    aria-label="1 hour"
-    value={3600000}
-    bind:group={expireIn}
-  />
-  <input
-    type="radio"
-    name="expire"
-    class="btn"
-    aria-label="1 day"
-    value={86400000}
-    bind:group={expireIn}
-  />
-  <input
-    type="radio"
-    name="expire"
-    class="btn"
-    aria-label="1 week"
-    value={604800000}
-    bind:group={expireIn}
-  />
-  <input
-    type="radio"
-    name="expire"
-    class="btn"
-    aria-label="1 month"
-    value={2629746000}
-    bind:group={expireIn}
-  />
-  <input
-    type="radio"
-    name="expire"
-    class="btn"
-    aria-label="1 year"
-    value={31556952000}
-    bind:group={expireIn}
-  />
-
-  <div class="grow" />
+<div class="flex">
+  <div class="grid w-[60%] grid-cols-3 gap-4 pb-4">
+    <input
+      type="radio"
+      name="expire"
+      class="btn btn-sm lg:btn"
+      aria-label="1 hour"
+      value={3600000}
+      bind:group={expireIn}
+    />
+    <input
+      type="radio"
+      name="expire"
+      class="btn btn-sm lg:btn"
+      aria-label="1 day"
+      value={86400000}
+      bind:group={expireIn}
+    />
+    <input
+      type="radio"
+      name="expire"
+      class="btn btn-sm lg:btn"
+      aria-label="1 week"
+      value={604800000}
+      bind:group={expireIn}
+    />
+    <input
+      type="radio"
+      name="expire"
+      class="btn btn-sm lg:btn"
+      aria-label="1 month"
+      value={2629746000}
+      bind:group={expireIn}
+    />
+    <input
+      type="radio"
+      name="expire"
+      class="btn btn-sm lg:btn"
+      aria-label="1 year"
+      value={31556952000}
+      bind:group={expireIn}
+    />
+    {#if $auth.authenticated && $auth.user.admin}
+      <input
+        type="radio"
+        name="expire"
+        class="btn btn-sm lg:btn"
+        aria-label="never"
+        value={1577847600000}
+        bind:group={expireIn}
+      />
+    {/if}
+  </div>
 
   {#if files.filter((i) => i.status === "done").length > 1}
+    <div class="grow"></div>
     <button on:click={copyAll} class="btn text-primary"><Copy size={16} /> Copy all</button>
   {/if}
 </div>
