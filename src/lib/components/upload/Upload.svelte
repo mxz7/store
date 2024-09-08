@@ -59,7 +59,7 @@
       return;
     }
 
-    files[index].progress.set(60, { duration: 10000 });
+    files[index].progress.set(85, { duration: 15000 });
 
     const { url, id: uploadedID } = await presigned.json();
 
@@ -67,7 +67,7 @@
 
     if (uploadRes.status === 200) {
       files[index].status = "done";
-      files[index].progress.set(100, { duration: 2000 });
+      files[index].progress.set(100, { duration: 1000 });
       files[index].uploadedId = uploadedID;
     } else {
       console.error(uploadRes);
