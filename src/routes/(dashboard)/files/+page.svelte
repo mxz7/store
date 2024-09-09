@@ -194,7 +194,12 @@
               {#if file.id.endsWith("png") || file.id.endsWith("jpeg") || file.id.endsWith("jpg") || file.id.endsWith("webp") || file.id.endsWith("avif") || file.id.endsWith("gif")}
                 <div class="avatar">
                   <div class="mask mask-squircle h-12 w-12">
-                    <img src="https://cdn.maxz.dev/{file.id}" alt={file.label} loading="lazy" />
+                    <img
+                      src="https://cdn.maxz.dev/{file.id}"
+                      alt={file.label}
+                      loading="lazy"
+                      decoding="async"
+                    />
                   </div>
                 </div>
               {/if}
