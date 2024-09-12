@@ -11,7 +11,7 @@ export const config = {
   regions: ["lhr1"],
 };
 
-export async function DELETE({ request }) {
+export async function GET({ request }) {
   if (request.headers.get("Authorization") !== `Bearer ${CRON_SECRET}`) return error(401);
 
   const expired = await db

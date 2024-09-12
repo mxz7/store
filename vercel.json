@@ -2,8 +2,7 @@
   "crons": [
     {
       "path": "/api/check-expired",
-      "schedule": "0 0 * * *",
-      "method": "DELETE"
+      "schedule": "0 0 * * *"
     }
   ]
 }
