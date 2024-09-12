@@ -3,7 +3,7 @@ import db from "$lib/server/database/db.js";
 import { uploads } from "$lib/server/database/schema.js";
 import s3 from "$lib/server/s3.js";
 import { DeleteObjectCommand } from "@aws-sdk/client-s3";
-import { error } from "@sveltejs/kit";
+import { error, json } from "@sveltejs/kit";
 import { eq, lte } from "drizzle-orm";
 
 export const config = {
@@ -19,10 +19,14 @@ export async function DELETE({ request }) {
     .from(uploads)
     .where(lte(uploads.expireAt, new Date()));
 
+  console.log(expired);
+
   for (const expiredItem of expired) {
     await s3.send(new DeleteObjectCommand({ Bucket: "maxz-dev", Key: expiredItem.id }));
     await db.delete(uploads).where(eq(uploads.id, expiredItem.id));
   }
 
   console.log(`deleted ${expired.length} expired uploads`);
+
+  return json({ success: true });
 }
