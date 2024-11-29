@@ -1,6 +1,7 @@
 import { nanoid } from "$lib/nanoid.js";
 import db from "$lib/server/database/db.js";
 import { uploads } from "$lib/server/database/schema.js";
+import { lucia } from "$lib/server/lucia.js";
 import s3 from "$lib/server/s3.js";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
@@ -13,7 +14,22 @@ export const config = {
 };
 
 export async function POST({ locals, getClientAddress, request }) {
-  const auth = await locals.validate(false);
+  let auth = await locals.validate(false);
+
+  if (!auth.authenticated && request.headers.get("authorization")) {
+    const bearer = lucia.readBearerToken(request.headers.get("authorization")!);
+
+    if (bearer) {
+      const bearerAuth = await lucia.validateSession(bearer);
+
+      if (bearerAuth.user) {
+        auth = {
+          authenticated: true,
+          ...bearerAuth,
+        };
+      }
+    }
+  }
 
   if (!auth.authenticated) return error(401);
 
@@ -34,6 +50,7 @@ export async function POST({ locals, getClientAddress, request }) {
     }),
     { expiresIn: 300 },
   );
+
   await db.insert(uploads).values({
     bytes: size,
     createdIp: getClientAddress(),
