@@ -3,9 +3,7 @@
   import { Check, CircleX, Copy } from "lucide-svelte";
   import toast from "svelte-french-toast";
   import { fly } from "svelte/transition";
-  import CopyClipboard from "../CopyClipboard.svelte";
   import type { FileData } from "./file";
-import { mount, unmount } from "svelte";
 
   interface Props {
     data: FileData;
@@ -16,20 +14,15 @@ import { mount, unmount } from "svelte";
   let progress = data.progress;
 
   function copyId() {
-    const component = mount(CopyClipboard, {
-          target: document.querySelector("body"),
-          props: { text: `https://cdn.maxz.dev/${data.uploadedId}` },
-        });
-
-    unmount(component);
-
-    toast.success("Copied to your clipboard", {
-      style:
-        "--tw-bg-opacity: 1; background-color: var(--fallback-b3,oklch(var(--b3)/var(--tw-bg-opacity))); --tw-text-opacity: 1; color: var(--fallback-bc,oklch(var(--bc)/var(--tw-text-opacity)));",
-      iconTheme: {
-        primary: "#a6e3a1",
-        secondary: "#FFFFFF",
-      },
+    navigator.clipboard.writeText(`https://cdn.maxz.dev/${data.uploadedId}`).then(() => {
+      toast.success("Copied to your clipboard", {
+        style:
+          "--tw-bg-opacity: 1; background-color: var(--fallback-b3,oklch(var(--b3)/var(--tw-bg-opacity))); --tw-text-opacity: 1; color: var(--fallback-bc,oklch(var(--bc)/var(--tw-text-opacity)));",
+        iconTheme: {
+          primary: "#a6e3a1",
+          secondary: "#FFFFFF",
+        },
+      });
     });
   }
 </script>

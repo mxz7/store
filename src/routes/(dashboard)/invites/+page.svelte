@@ -1,32 +1,25 @@
 <script lang="ts">
   import { enhance } from "$app/forms";
   import { invalidate } from "$app/navigation";
-  import CopyClipboard from "$lib/components/CopyClipboard.svelte";
   import dayjs from "dayjs";
-  import { Copy, Trash } from "lucide-svelte";
+  import { Copy } from "lucide-svelte";
   import toast from "svelte-french-toast";
   import DeleteButton from "./DeleteButton.svelte";
-import { mount, unmount } from "svelte";
 
   let { data } = $props();
 
-  let modal: HTMLDialogElement = $state();
+  let modal: HTMLDialogElement;
 
   function copyId(text: string) {
-    const component = mount(CopyClipboard, {
-          target: document.querySelector("body"),
-          props: { text },
-        });
-
-    unmount(component);
-
-    toast.success("Copied to your clipboard", {
-      style:
-        "--tw-bg-opacity: 1; background-color: var(--fallback-b3,oklch(var(--b3)/var(--tw-bg-opacity))); --tw-text-opacity: 1; color: var(--fallback-bc,oklch(var(--bc)/var(--tw-text-opacity)));",
-      iconTheme: {
-        primary: "#a6e3a1",
-        secondary: "#FFFFFF",
-      },
+    navigator.clipboard.writeText(text).then(() => {
+      toast.success("Copied to your clipboard", {
+        style:
+          "--tw-bg-opacity: 1; background-color: var(--fallback-b3,oklch(var(--b3)/var(--tw-bg-opacity))); --tw-text-opacity: 1; color: var(--fallback-bc,oklch(var(--bc)/var(--tw-text-opacity)));",
+        iconTheme: {
+          primary: "#a6e3a1",
+          secondary: "#FFFFFF",
+        },
+      });
     });
   }
 </script>
