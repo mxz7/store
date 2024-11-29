@@ -6,18 +6,19 @@
   import { Copy, Trash } from "lucide-svelte";
   import toast from "svelte-french-toast";
   import DeleteButton from "./DeleteButton.svelte";
+import { mount, unmount } from "svelte";
 
-  export let data;
+  let { data } = $props();
 
-  let modal: HTMLDialogElement;
+  let modal: HTMLDialogElement = $state();
 
   function copyId(text: string) {
-    const component = new CopyClipboard({
-      target: document.querySelector("body"),
-      props: { text },
-    });
+    const component = mount(CopyClipboard, {
+          target: document.querySelector("body"),
+          props: { text },
+        });
 
-    component.$destroy();
+    unmount(component);
 
     toast.success("Copied to your clipboard", {
       style:
@@ -76,7 +77,7 @@
   </form>
 </dialog>
 
-<button class="btn btn-success m-2" on:click={() => modal.show()}> Create </button>
+<button class="btn btn-success m-2" onclick={() => modal.show()}> Create </button>
 
 <div class="mt-4 overflow-x-auto">
   <table class="table">
@@ -97,7 +98,7 @@
           <td>{invite.username}</td>
           <td class="flex gap-2">
             <button
-              on:click={() => copyId(invite.id)}
+              onclick={() => copyId(invite.id)}
               class=" btn btn-ghost tooltip"
               data-tip="Copy invite token to clipboard"
             >

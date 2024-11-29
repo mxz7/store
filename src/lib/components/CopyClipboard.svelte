@@ -1,8 +1,12 @@
 <script lang="ts">
   import { onMount } from "svelte";
 
-  export let text: string;
-  let textArea: HTMLTextAreaElement;
+  interface Props {
+    text: string;
+  }
+
+  let { text = $bindable() }: Props = $props();
+  let textArea: HTMLTextAreaElement = $state();
 
   onMount(() => {
     textArea.select();

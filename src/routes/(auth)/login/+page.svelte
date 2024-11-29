@@ -3,7 +3,7 @@
   import { KeyRound, User } from "lucide-svelte";
   import { superForm } from "sveltekit-superforms";
 
-  export let data;
+  let { data } = $props();
 
   const { form, errors, enhance, constraints, delayed } = superForm(data.form, {
     delayMs: 100,

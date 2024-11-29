@@ -2,8 +2,12 @@
   import { invalidate } from "$app/navigation";
   import { Trash } from "lucide-svelte";
 
-  export let id: string;
-  let loading = false;
+  interface Props {
+    id: string;
+  }
+
+  let { id }: Props = $props();
+  let loading = $state(false);
 
   async function onClick() {
     if (loading) return;
@@ -15,9 +19,9 @@
   }
 </script>
 
-<button on:click={onClick} class="btn btn-ghost tooltip tooltip-error" data-tip="Delete token">
+<button onclick={onClick} class="btn btn-ghost tooltip tooltip-error" data-tip="Delete token">
   {#if loading}
-    <span class="loading loading-spinner text-error" />
+    <span class="loading loading-spinner text-error"></span>
   {:else}
     <Trash size={16} class="text-error" />
   {/if}

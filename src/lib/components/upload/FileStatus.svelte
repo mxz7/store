@@ -5,18 +5,23 @@
   import { fly } from "svelte/transition";
   import CopyClipboard from "../CopyClipboard.svelte";
   import type { FileData } from "./file";
+import { mount, unmount } from "svelte";
 
-  export let data: FileData;
+  interface Props {
+    data: FileData;
+  }
+
+  let { data }: Props = $props();
 
   let progress = data.progress;
 
   function copyId() {
-    const component = new CopyClipboard({
-      target: document.querySelector("body"),
-      props: { text: `https://cdn.maxz.dev/${data.uploadedId}` },
-    });
+    const component = mount(CopyClipboard, {
+          target: document.querySelector("body"),
+          props: { text: `https://cdn.maxz.dev/${data.uploadedId}` },
+        });
 
-    component.$destroy();
+    unmount(component);
 
     toast.success("Copied to your clipboard", {
       style:
@@ -44,7 +49,7 @@
         {data.uploadedId}
       </a>
 
-      <button on:click={copyId} class="btn btn-ghost tooltip" data-tip="Copy to clipboard">
+      <button onclick={copyId} class="btn btn-ghost tooltip" data-tip="Copy to clipboard">
         <Copy size={16} />
       </button>
     {/if}
@@ -53,7 +58,7 @@
 
   <div class="mt-1 flex w-full items-center gap-2">
     {#if data.status === "processing" || data.status === "uploading"}
-      <span class="loading loading-spinner loading-xs" />
+      <span class="loading loading-spinner loading-xs"></span>
     {:else if data.status === "error"}
       <span class="tooltip tooltip-error" data-tip="failed to upload">
         <CircleX class="text-error" size={16} />

@@ -8,9 +8,9 @@
   import { superForm } from "sveltekit-superforms";
   import DeleteButton from "./DeleteButton.svelte";
 
-  export let data;
+  let { data } = $props();
 
-  let renameModal: HTMLDialogElement;
+  let renameModal: HTMLDialogElement = $state();
 
   const { form, enhance, errors, constraints, delayed } = superForm(data.form, {
     delayMs: 250,
@@ -68,7 +68,7 @@
         <th>
           <button
             class="flex items-center gap-2"
-            on:click={() => {
+            onclick={() => {
               const params = new URLSearchParams($page.url.searchParams);
 
               if (data.orderDisplay.column === "label") {
@@ -97,7 +97,7 @@
         <th>
           <button
             class="flex items-center gap-2"
-            on:click={() => {
+            onclick={() => {
               const params = new URLSearchParams($page.url.searchParams);
 
               if (data.orderDisplay.column === "size") {
@@ -126,7 +126,7 @@
         <th>
           <button
             class="flex items-center gap-2"
-            on:click={() => {
+            onclick={() => {
               const params = new URLSearchParams($page.url.searchParams);
 
               if (data.orderDisplay.column === "date") {
@@ -155,7 +155,7 @@
         <th>
           <button
             class="flex items-center gap-2"
-            on:click={() => {
+            onclick={() => {
               const params = new URLSearchParams($page.url.searchParams);
 
               if (data.orderDisplay.column === "expire") {
@@ -233,7 +233,7 @@
             <button
               class="btn btn-ghost tooltip tooltip-top"
               data-tip="rename"
-              on:click={() => {
+              onclick={() => {
                 $form.id = file.id;
                 $form.label = file.label;
                 renameModal.showModal();

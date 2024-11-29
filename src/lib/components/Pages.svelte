@@ -1,9 +1,13 @@
 <script lang="ts">
   import { ArrowLeft, ArrowRight } from "lucide-svelte";
 
-  export let currentPage: number;
-  export let lastPage: number;
-  export let route: string;
+  interface Props {
+    currentPage: number;
+    lastPage: number;
+    route: string;
+  }
+
+  let { currentPage, lastPage, route }: Props = $props();
 </script>
 
 <div class="mt-2 flex w-full justify-center">

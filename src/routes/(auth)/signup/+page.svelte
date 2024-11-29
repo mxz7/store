@@ -1,11 +1,11 @@
-<script>
+<script lang="ts">
   import { goto } from "$app/navigation";
   import { getLocalAuth } from "$lib/stores";
   import { KeyRound, ShieldAlert, User } from "lucide-svelte";
   import toast from "svelte-french-toast";
   import { superForm } from "sveltekit-superforms";
 
-  export let data;
+  let { data } = $props();
 
   const { form, errors, enhance, constraints, message, delayed } = superForm(data.form, {
     delayMs: 100,

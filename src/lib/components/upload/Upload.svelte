@@ -10,11 +10,12 @@
   import CopyClipboard from "../CopyClipboard.svelte";
   import type { FileData } from "./file";
   import FileStatus from "./FileStatus.svelte";
+import { mount, unmount } from "svelte";
 
   let formFiles = writable<FileList>();
-  let files: FileData[] = [];
-  let expireIn: number = 31556952000;
-  let stripExif = true;
+  let files: FileData[] = $state([]);
+  let expireIn: number = $state(31556952000);
+  let stripExif = $state(true);
 
   async function handleFile(file: File) {
     if (stripExif && file.type === "image/jpeg") {
@@ -98,17 +99,17 @@
   }
 
   function copyAll() {
-    const component = new CopyClipboard({
-      target: document.querySelector("body"),
-      props: {
-        text: files
-          .filter((i) => i.status === "done")
-          .map((i) => `https://cdn.maxz.dev/${i.uploadedId}`)
-          .join("\n"),
-      },
-    });
+    const component = mount(CopyClipboard, {
+          target: document.querySelector("body"),
+          props: {
+            text: files
+              .filter((i) => i.status === "done")
+              .map((i) => `https://cdn.maxz.dev/${i.uploadedId}`)
+              .join("\n"),
+          },
+        });
 
-    component.$destroy();
+    unmount(component);
 
     toast.success("Copied to your clipboard", {
       style:
@@ -182,7 +183,7 @@
 
   {#if files.filter((i) => i.status === "done").length > 1}
     <div class="grow"></div>
-    <button on:click={copyAll} class="btn text-primary"><Copy size={16} /> Copy all</button>
+    <button onclick={copyAll} class="btn text-primary"><Copy size={16} /> Copy all</button>
   {/if}
 </div>
 
@@ -200,8 +201,8 @@
 <label
   class="flex h-fit w-full cursor-pointer items-center justify-center rounded-lg border border-accent border-opacity-15 bg-base-300 p-4 duration-200 hover:border-opacity-25"
   for="file"
-  on:drop={handleDrop}
-  on:dragover={(e) => e.preventDefault()}
+  ondrop={handleDrop}
+  ondragover={(e) => e.preventDefault()}
 >
   <input type="file" name="file" id="file" multiple hidden bind:files={$formFiles} />
   <div class="flex flex-col gap-2 text-center">

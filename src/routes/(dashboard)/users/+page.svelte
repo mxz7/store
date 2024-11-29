@@ -3,7 +3,7 @@
   import { formatBytes } from "$lib/format.js";
   import dayjs from "dayjs";
 
-  export let data;
+  let { data } = $props();
 </script>
 
 <svelte:head>

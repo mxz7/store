@@ -2,6 +2,11 @@
   import { dashboard } from "$lib/stores";
   import { onDestroy, onMount } from "svelte";
   import Sidebar from "./Sidebar.svelte";
+  interface Props {
+    children?: import('svelte').Snippet;
+  }
+
+  let { children }: Props = $props();
 
   onMount(() => {
     $dashboard = true;
@@ -19,7 +24,7 @@
     <Sidebar />
 
     <div class="drawer-content pl-3">
-      <slot />
+      {@render children?.()}
     </div>
   </div>
 </div>
