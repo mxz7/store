@@ -46,7 +46,7 @@
     "dayjs": "^1.11.13",
     "drizzle-orm": "^0.32.1",
     "lucia": "^3.2.0",
-    "nanoid": "^5.0.7",
+    "nanoid": "^5.0.9",
     "svelte-french-toast": "^1.2.0"
   }
 }
